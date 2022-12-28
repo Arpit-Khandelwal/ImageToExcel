@@ -1,12 +1,12 @@
 import pytesseract
 import openpyxl
 
-# Load the image and perform OCR on it
-image = "path/to/image.jpg"
-text = pytesseract.image_to_string(image)
+  # Load the image and perform OCR on it
+  image = "path/to/image.jpg"
+  text = pytesseract.image_to_string(image)
 
-# Split the OCR text into lines
-lines = text.split("\n")
+  # Split the OCR text into lines
+  lines = text.split("\n")
 
 # Create a new workbook and add a sheet to it
 workbook = openpyxl.Workbook()
