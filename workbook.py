@@ -4,25 +4,37 @@ import openpyxl
 
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
-try:
-  # Load the image and perform OCR on it
-  image = "1.jpeg"
-  text = pytesseract.image_to_string(image)
 
-  # Split the OCR text into lines
-  lines = text.split("\n")
+# Load the image and perform OCR on it
+image = "1.jpeg"
+text = pytesseract.image_to_string(image)
 
-  # Create a new workbook and add a sheet to it
-  workbook = openpyxl.Workbook()
-  sheet = workbook.active
+# Split the OCR text into lines
+lines = text.split("\n")
 
-  # Write the extracted information to the sheet
-  for i, line in enumerate(lines):
-    sheet.cell(row=i+1, column=1).value = line
+# Create a new workbook and add a sheet to it
+workbook = openpyxl.Workbook()
+sheet = workbook.active
 
-  # Save the workbook to a file
-  workbook.save("output.xlsx")
+# Write the extracted information to the sheet
+headers = []
+data = []
+for i, line in enumerate(lines):
+  if i == 0:
+    # Parse the headers from the first line
+    headers = line.split()
+  else:
+    # Parse the data from the remaining lines
+    data.append(line.split())
 
-except Exception as e:
-  # Handle any exceptions that may occur
-  print(f"An error occurred: {e}")
+# Write the headers to the sheet
+for i, header in enumerate(headers):
+  sheet.cell(row=1, column=i+1).value = header
+
+# Write the data to the sheet
+for i, row in enumerate(data):
+  for j, cell in enumerate(row):
+    sheet.cell(row=i+2, column=j+1).value = cell
+
+# Save the workbook to a file
+workbook.save("output.xlsx")
