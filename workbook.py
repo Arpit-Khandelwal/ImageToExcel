@@ -1,9 +1,12 @@
 import pytesseract
 import openpyxl
 
+
+pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+
 try:
   # Load the image and perform OCR on it
-  image = "path/to/image.jpg"
+  image = "1.jpeg"
   text = pytesseract.image_to_string(image)
 
   # Split the OCR text into lines
